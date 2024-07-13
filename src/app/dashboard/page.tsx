@@ -1,8 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function DashboardIndex() {
+import { getSession } from "@/lib/auth/session";
+
+export default async function DashboardIndex() {
   // TODO: get user data from the session
+
   const user = {
     name: "",
     email: "",
@@ -26,11 +29,11 @@ export default function DashboardIndex() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Welcome, {user.name}!
+              Welcome, {user?.name}!
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p>Your email is {user.email}</p>
+            <p>Your email is {user?.email}</p>
           </CardContent>
         </Card>
         <TabsContent value="overview" className="space-y-4">

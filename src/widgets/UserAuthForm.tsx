@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { signIn } from "next-auth/react";
+import { singIn } from "@/lib/auth/singIn";
 
 export default function UserAuthForm() {
   async function handleSubmit(formData: FormData) {
-    const email = formData.get("email");
-    const password = formData.get("password");
+    const email = formData.get("email")!.toString();
+    const password = formData.get("password")!.toString();
 
     // TODO: call the `signIn`
     // with credentials and redirect user to /dashboard

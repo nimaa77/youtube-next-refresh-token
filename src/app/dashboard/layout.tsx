@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { signOut } from "next-auth/react";
+import { signOut } from "@/lib/auth/singOut";
 
 export default function DashboardLayout({
   children,
@@ -43,8 +43,7 @@ export default function DashboardLayout({
             <button
               className="ms-auto"
               onClick={() => {
-                // TODO: call `signOut
-                // and redirect to /
+                // TODO: sign out!
               }}
             >
               Logout
