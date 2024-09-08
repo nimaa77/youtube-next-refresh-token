@@ -1,21 +1,40 @@
-"use server";
+"use server"
 
-import "server-only";
+import "server-only"
 
-import { redirect } from "next/navigation";
-import { saveSession } from "./storage";
+import { redirect } from "next/navigation"
+import { saveSession } from "./storage"
 
-const BACKEND_URL = "http://localhost:4000";
+const BACKEND_URL =
+  "http://localhost:4000"
 
 export async function singIn({
   redirectTo = "/dashboard",
   ...credentials
 }: {
-  email: string;
-  password: string;
-  redirectTo?: string;
+  email: string
+  password: string
+  redirectTo?: string
 }) {
-  // validate the credentials with the backend
-  // if the credentials are valid, save the session
-  // and redirect the user to the dashboard
+  const res = await fetch(
+    `${BACKEND_URL}/v1/auth/signin`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+      body: JSON.stringify(credentials),
+    }
+  )
+
+  if (!res.ok) {
+    return null
+  }
+
+  const data = await res.json()
+
+  saveSession(data.accessToken)
+
+  redirect(redirectTo)
 }

@@ -1,12 +1,14 @@
-"use server";
+"use server"
 
-import "server-only";
+import "server-only"
 
-import { redirect } from "next/navigation";
+import { redirect } from "next/navigation"
 
-import { removeSession } from "./storage";
+import { removeSession } from "./storage"
 
-export async function signOut(options?: { redirectTo?: string }) {
-  // clear the cookie
-  // redirect the user to the home page
+export async function signOut(options?: {
+  redirectTo?: string
+}) {
+  removeSession()
+  redirect(options?.redirectTo ?? "/")
 }

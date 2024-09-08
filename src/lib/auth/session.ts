@@ -1,14 +1,37 @@
-import "server-only";
+import "server-only"
 
-import { cookies } from "next/headers";
-import { Session } from "./types";
-import { cookieName } from "./storage";
+import { cookies } from "next/headers"
+import { Session } from "./types"
+import { cookieName } from "./storage"
 
-const BACKEND_URL = "http://localhost:4000";
+const BACKEND_URL =
+  "http://localhost:4000"
 
 export async function getSession(): Promise<Session | null> {
-  // get token from cookie
-  // get user from /v1/me
-  // return the data
-  return null;
+  const accessToken =
+    cookies().get(cookieName)?.value
+
+  if (!accessToken) {
+    return null
+  }
+
+  const res = await fetch(
+    `${BACKEND_URL}/v1/me`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  )
+
+  if (!res.ok) {
+    return null
+  }
+
+  const user = await res.json()
+
+  return {
+    user,
+    accessToken,
+  }
 }

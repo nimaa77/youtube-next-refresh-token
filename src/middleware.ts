@@ -1,3 +1,5 @@
-// TODO: implement middleware
-// TODO: implement config
-export function middleware() {}
+export { middleware } from "@/lib/auth/middleware"
+
+export const config = {
+  matcher: ["/dashboard/:path*"],
+}

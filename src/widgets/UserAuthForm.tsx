@@ -1,18 +1,26 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
-import { singIn } from "@/lib/auth/singIn";
+import { singIn } from "@/lib/auth/singIn"
 
 export default function UserAuthForm() {
-  async function handleSubmit(formData: FormData) {
-    const email = formData.get("email")!.toString();
-    const password = formData.get("password")!.toString();
+  async function handleSubmit(
+    formData: FormData
+  ) {
+    const email = formData.get(
+      "email"
+    ) as string
+    const password = formData.get(
+      "password"
+    ) as string
 
-    // TODO: call the `signIn`
-    // with credentials and redirect user to /dashboard
+    singIn({
+      email,
+      password,
+    })
   }
 
   return (
@@ -20,7 +28,10 @@ export default function UserAuthForm() {
       <form action={handleSubmit}>
         <div className="grid gap-2">
           <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="email">
+            <Label
+              className="sr-only"
+              htmlFor="email"
+            >
               Email
             </Label>
             <Input
@@ -34,7 +45,10 @@ export default function UserAuthForm() {
             />
           </div>
           <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="password">
+            <Label
+              className="sr-only"
+              htmlFor="password"
+            >
               Password
             </Label>
             <Input
@@ -51,5 +65,5 @@ export default function UserAuthForm() {
         </div>
       </form>
     </div>
-  );
+  )
 }

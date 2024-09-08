@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import Link from "next/link";
+import Link from "next/link"
 
-import { signOut } from "@/lib/auth/singOut";
+import { signOut } from "@/lib/auth/singOut"
 
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <>
@@ -43,15 +43,17 @@ export default function DashboardLayout({
             <button
               className="ms-auto"
               onClick={() => {
-                // TODO: sign out!
+                signOut()
               }}
             >
               Logout
             </button>
           </div>
         </div>
-        <div className="flex-1 space-y-4 p-8 pt-6">{children}</div>
+        <div className="flex-1 space-y-4 p-8 pt-6">
+          {children}
+        </div>
       </div>
     </>
-  );
+  )
 }
