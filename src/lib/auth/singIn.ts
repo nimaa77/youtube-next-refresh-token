@@ -1,40 +1,35 @@
-"use server"
+"use server";
 
-import "server-only"
+import "server-only";
 
-import { redirect } from "next/navigation"
-import { saveSession } from "./storage"
+import { redirect } from "next/navigation";
+import { saveSession } from "./storage";
 
-const BACKEND_URL =
-  "http://localhost:4000"
+const BACKEND_URL = "http://localhost:4000";
 
 export async function singIn({
   redirectTo = "/dashboard",
   ...credentials
 }: {
-  email: string
-  password: string
-  redirectTo?: string
+  email: string;
+  password: string;
+  redirectTo?: string;
 }) {
-  const res = await fetch(
-    `${BACKEND_URL}/v1/auth/signin`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type":
-          "application/json",
-      },
-      body: JSON.stringify(credentials),
-    }
-  )
+  const res = await fetch(`${BACKEND_URL}/v1/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
 
   if (!res.ok) {
-    return null
+    return null;
   }
 
-  const data = await res.json()
+  const data = await res.json();
 
-  saveSession(data.accessToken)
+  saveSession(data.accessToken);
 
-  redirect(redirectTo)
+  redirect(redirectTo);
 }
