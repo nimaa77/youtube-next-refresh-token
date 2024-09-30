@@ -1,16 +1,10 @@
-"use client"
-
+import { useSession } from "@/lib/auth/useSession"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
 } from "@/components/ui/card"
-import { useSession } from "@/lib/auth/useSession"
-import {
-  useEffect,
-  useState,
-} from "react"
+import { request } from "@/lib/client"
 
 interface Order {
   title: string
@@ -19,31 +13,13 @@ interface Order {
   status: string
 }
 
-export default function OrdersPage() {
-  const session = useSession()
-
-  const [orders, setOrders] = useState<
-    Order[]
-  >([])
-
-  useEffect(() => {
-    fetch(
-      "http://localhost:4000/v1/orders",
-      {
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-      }
-    )
-      .then((response) =>
-        response.json()
-      )
-      .then((data) => {
-        setOrders(data.data)
-      })
-  }, [])
-
-  console.log({ orders })
+export default async function OrdersPage() {
+  // use axios to fetch the orders
+  const orders = await request({
+    url: "/v1/orders",
+  }).then((data) => {
+    return data.data.data
+  })
 
   return (
     <Card>
@@ -53,7 +29,7 @@ export default function OrdersPage() {
             Orders
           </h2>
         </CardHeader>
-        <CardDescription>
+        <CardContent>
           {orders.map((order) => (
             <div key={order.title}>
               <p>
@@ -64,7 +40,7 @@ export default function OrdersPage() {
               </p>
             </div>
           ))}
-        </CardDescription>
+        </CardContent>
       </CardContent>
     </Card>
   )

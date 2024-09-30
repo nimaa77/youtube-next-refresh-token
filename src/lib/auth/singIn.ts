@@ -29,7 +29,12 @@ export async function singIn({
 
   const data = await res.json();
 
-  saveSession(data.accessToken);
+  const session = {
+    accessToken: data.accessToken,
+    refreshToken: data.refreshToken,
+    accessTokenExpires: data.accessToken_expires,
+  };
+  saveSession(session);
 
   redirect(redirectTo);
 }

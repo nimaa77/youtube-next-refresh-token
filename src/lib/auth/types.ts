@@ -5,5 +5,6 @@ export interface User {
 
 export interface Session {
   accessToken: string;
+  accessTokenExpires: number;
   user: User;
 }

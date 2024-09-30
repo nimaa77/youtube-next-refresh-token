@@ -1,22 +1,20 @@
-import { cookies } from "next/headers"
+import { cookies } from "next/headers";
 
-export const cookieName = "USER_SESSION"
+export const cookieName = "USER_SESSION";
 
-export function saveSession(
-  accessToken: string
-) {
-  cookies().set(
-    cookieName,
-    accessToken,
-    {
-      httpOnly: true,
-      secure:
-        process.env.NODE_ENV ===
-        "production",
-    }
-  )
+interface Session {
+  accessToken: string;
+  refreshToken: string;
+  accessTokenExpires: string;
+}
+
+export function saveSession(session: Session) {
+  cookies().set(cookieName, JSON.stringify(session), {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  });
 }
 
 export function removeSession() {
-  cookies().delete(cookieName)
+  cookies().delete(cookieName);
 }

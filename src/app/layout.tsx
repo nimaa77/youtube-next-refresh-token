@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils"
 import { getSession } from "@/lib/auth/session"
 import { SessionProvider } from "@/lib/auth/SessionProvider"
 
+import Fetcher from "@/components/Fetcher"
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -24,6 +26,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const session = await getSession()
+
   return (
     <html lang="en">
       <body
@@ -35,7 +38,7 @@ export default async function RootLayout({
         <SessionProvider
           session={session}
         >
-          {children}
+          <Fetcher>{children}</Fetcher>
         </SessionProvider>
       </body>
     </html>
